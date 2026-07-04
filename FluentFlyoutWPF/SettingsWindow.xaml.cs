@@ -19,7 +19,7 @@ public partial class SettingsWindow : FluentWindow
     private static SettingsWindow? instance;
     private Type? _currentPageType;
     private ScrollViewer? _contentScrollViewer;
-    private List<SearchItem> _allSearchItems = new();
+    private List<SearchItem> _allSearchItems = [];
     private string? _pendingHighlightElementId = null;
     static readonly Regex SplitCamelCaseRegex = new(@"(?<=[a-z0-9])(?=[A-Z])", RegexOptions.Compiled);
 
@@ -40,43 +40,11 @@ public partial class SettingsWindow : FluentWindow
 
         InitializeComponent();
         instance = this;
-        this.SizeChanged += SettingsWindow_SizeChanged;
 
         Closed += (s, e) => instance = null;
         DataContext = SettingsManager.Current;
 
         RootNavigation.SetCurrentValue(NavigationView.IsPaneOpenProperty, false);
-    }
-
-    private void SettingsWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        UpdateSearchBoxPosition();
-    }
-
-    private void UpdateSearchBoxPosition()
-    {
-        if (SearchGrid.IsLoaded)
-        {
-            try
-            {
-                var transform = SearchGrid.TransformToAncestor(this);
-                Point gridPos = transform.Transform(new Point(0, 0));
-
-                double leftBound = gridPos.X;
-                double rightBound = this.ActualWidth - 150; // 150px approx width of window control buttons
-
-                if (rightBound > leftBound)
-                {
-                    double availableWidth = rightBound - leftBound;
-                    SearchGrid.Width = Math.Max(availableWidth, SearchBox.Width);
-                }
-                else
-                {
-                    SearchGrid.Width = SearchBox.Width;
-                }
-            }
-            catch { }
-        }
     }
 
     public static void ShowInstance(string? navigationPage = null)
@@ -177,7 +145,7 @@ public partial class SettingsWindow : FluentWindow
         foreach (var item in SearchItems)
         {
             string title = Application.Current.TryFindResource(item.ResourceKey)?.ToString() ?? item.ResourceKey;
-            // Clean up the page type name (e.g. "SystemPage" -> "System")
+            // Clean up the page type name (e.g. "SystemPage" -> "System") and split camel case (e.g. "MediaFlyout" -> "Media Flyout")
             string pageName = SplitCamelCaseRegex.Replace(item.TargetPageType.Name.Replace("Page", ""), " ");
             items.Add(new SearchItem { Title = $"{title}", Subtitle = pageName, TargetPageType = item.TargetPageType, TargetElementId = item.TargetElementId });
         }
@@ -218,7 +186,6 @@ public partial class SettingsWindow : FluentWindow
 
     private async void SettingsWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        UpdateSearchBoxPosition();
         RootNavigation.IsPaneOpen = false;
 
         _currentPageType = typeof(HomePage);
@@ -243,7 +210,7 @@ public partial class SettingsWindow : FluentWindow
                 var elementId = _pendingHighlightElementId;
                 _pendingHighlightElementId = null;
                 // Add a slight delay to ensure page is fully rendered before finding child and scrolling
-                Task.Delay(150).ContinueWith(_ => ScrollToAndHighlight(elementId));
+                Task.Delay(300).ContinueWith(_ => ScrollToAndHighlight(elementId));
             }
         };
 
@@ -282,12 +249,6 @@ public partial class SettingsWindow : FluentWindow
     private void SettingsWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
         SettingsManager.SaveSettings();
-    }
-
-    private void SaveButton_Click(object sender, RoutedEventArgs e)
-    {
-        SettingsManager.SaveSettings();
-        Close();
     }
 
     private void ResetScrollPosition()
