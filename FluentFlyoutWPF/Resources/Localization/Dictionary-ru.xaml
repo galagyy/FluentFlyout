@@ -284,4 +284,8 @@
     <system:String x:Key="AnonymousUsageDataTitle">Отправлять анонимные данные об использовании</system:String>
     <system:String x:Key="AnonymousUsageDataDescription">Помогите улучшить приложение, отправляя анонимные данные об использовании, которые не содержат личной информации</system:String>
     <system:String x:Key="TaskbarVisualizerBaselineAutoHideDescription">Автоматически скрывать базовый уровень, когда аудио не воспроизводится</system:String>
+    <system:String x:Key="TaskbarWidgetScrollingTextLoopForeverTitle">Непрерывная прокрутка</system:String>
+    <system:String x:Key="TaskbarWidgetScrollingTextSpeedTitle">Скорость прокрутки</system:String>
+    <system:String x:Key="Back">Назад</system:String>
+    <system:String x:Key="OnboardingStepsCounter">Шаг {0} из {1}</system:String>
 </ResourceDictionary>
