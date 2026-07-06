@@ -91,6 +91,7 @@ hides repeat, shuffle and player info</System:String>
     <System:String x:Key="TaskbarVisualizerCenteredBarsDescription">Bars that expand symmetrically from the center instead of rising from the bottom</System:String>
     <System:String x:Key="TaskbarVisualizerBaselineTitle">Show Baseline</System:String>
     <System:String x:Key="TaskbarVisualizerBaselineDescription">Displays a thin line when audio levels are at zero</System:String>
+    <System:String x:Key="TaskbarVisualizerBaselineAutoHideDescription">Automatically hides the baseline when no audio is playing</System:String>
     <System:String x:Key="TaskbarVisualizerAudioSensitivityTitle">Audio Sensitivity</System:String>
     <System:String x:Key="TaskbarVisualizerAudioSensitivityDescription">How loud audio must be before the bars start moving</System:String>
     <System:String x:Key="TaskbarVisualizerAudioPeakLevelTitle">Audio Peak Threshold</System:String>
@@ -239,6 +240,7 @@ You can help contribute translations on</System:String>
     <System:String x:Key="UpdateToastTitle">FluentFlyout has been updated!</System:String>
     <System:String x:Key="UpdateToastMessage">You are now on {0}.</System:String>
     <System:String x:Key="UpdateToastButton">View Updates</System:String>
+    <System:String x:Key="SearchSettings">Search settings</System:String>
     <System:String x:Key="UpdateAvailable">Update available</System:String>
     <System:String x:Key="UpToDate">Up to date</System:String>
     <System:String x:Key="LastChecked">Last checked: {0}</System:String>
